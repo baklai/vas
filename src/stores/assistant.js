@@ -267,14 +267,14 @@ export const useAssistant = defineStore('assistant', () => {
           await play('pryvit-shcho-potribno-kazhy-pislya-syhnalu');
 
           const audioData = await recording();
+          const text = await speechToText(audioData);
+          const task = await window.api.receive('tasks', text);
 
-          const task = await speechToText(audioData);
-
-          // const response = await window.api.receive('tasks', null);
-
-          const response = await chatGPT(task);
-
-          await textToSpeech(response);
+          if (task) {
+            await play('zadacha-uspishno-vykonana');
+          } else {
+            await play('shchos-ya-tebe-ne-zrozumiv');
+          }
 
           await listening();
         }

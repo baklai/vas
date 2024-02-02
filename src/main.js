@@ -124,7 +124,7 @@ ipcMain.handle('tasks', (event, request) => {
     return 'task';
   }
 
-  return 'no task';
+  return;
 });
 
 ipcMain.handle('tasks-list', (event, args) => {
