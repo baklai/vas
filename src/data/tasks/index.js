@@ -1,51 +1,48 @@
-import tasks from './database';
+import moment from 'moment';
 
-export const searchTask = inputString => {
-  if (!inputString?.length) return;
+import 'moment/dist/locale/uk';
 
-  const setsOfWords = [];
+const tasks = {
+  base: {
+    group: 'Базові функції',
+    tasks: [
+      {
+        request: 'Котра година?',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+        action: () => {
+          const currentDate = new Date();
+          const hh = moment.duration(currentDate.getHours(), 'h').locale('uk').humanize();
+          const mm = moment.duration(currentDate.getMinutes(), 'm').locale('uk').humanize();
 
-  for (let key in tasks) {
-    if (tasks.hasOwnProperty(key)) {
-      setsOfWords.push(...tasks[key].records);
-    }
-  }
-
-  const wordsInString = [
-    ...new Set(
-      inputString
-        .toLowerCase()
-        .replace(/[^\w\s]/gi, '')
-        .split(' ')
-    )
-  ];
-
-  if (!wordsInString.length) return;
-
-  let bestSet = null;
-  let maxMatchingPercentage = 0;
-  let countWordSet = 0;
-
-  for (const wordSet of setsOfWords) {
-    const matchingWords = wordSet?.words?.filter(word =>
-      wordsInString.includes(word.toLowerCase())
-    );
-
-    const matchingPercentage = Math.round((matchingWords.length / wordsInString.length) * 100);
-
-    if (matchingPercentage >= maxMatchingPercentage && wordSet?.words?.length > countWordSet) {
-      maxMatchingPercentage = matchingPercentage;
-      bestSet = wordSet;
-    }
-  }
-
-  return { task: bestSet, matchingPercentage: maxMatchingPercentage };
+          return `Поточний час: ${hh}, ${mm}`;
+        }
+      }
+    ]
+  },
+  system: { group: 'Операційна система', tasks: [] },
+  chatgpt: { group: 'Бесіда з ChatGPT', tasks: [] }
 };
 
-export const taskList = () => {
+export const listOfTasks = () => {
   const response = [];
 
-  for (let key in tasks) {
+  for (const key in tasks) {
+    if (tasks.hasOwnProperty(key)) {
+      response.push(
+        ...tasks[key].tasks.map(({ request, description, action }) => {
+          return { request, description, action };
+        })
+      );
+    }
+  }
+
+  return response;
+};
+
+export const listTasksOfGroups = () => {
+  const response = [];
+
+  for (const key in tasks) {
     if (tasks.hasOwnProperty(key)) {
       response.push({
         group: tasks[key].group,
@@ -59,4 +56,4 @@ export const taskList = () => {
   return response;
 };
 
-export default searchTask;
+export default tasks;

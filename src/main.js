@@ -1,8 +1,18 @@
-import { app, Tray, Menu, nativeImage, BrowserWindow, Notification, ipcMain } from 'electron';
+import {
+  app,
+  Tray,
+  Menu,
+  ipcMain,
+  nativeImage,
+  nativeTheme,
+  Notification,
+  BrowserWindow
+} from 'electron';
 import { join } from 'path';
 
-import phrases from './data/phrases/index.js';
-import { searchTask, taskList } from './data/tasks/index.js';
+import { listOfTasks, listTasksOfGroups } from './data/tasks';
+
+import similarOfTasks from './utils/string-distance';
 
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -58,6 +68,9 @@ const createWindow = async () => {
     }
   });
 
+  // Dark Theme
+  nativeTheme.themeSource = 'dark';
+
   // Open Dev Tools
   mainWindow.webContents.openDevTools();
 };
@@ -104,12 +117,18 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.handle('tasks', (event, args) => {
-  return '';
+ipcMain.handle('tasks', (event, request) => {
+  const tasks = listOfTasks();
+  const task = similarOfTasks(request, tasks);
+  if (task) {
+    return 'task';
+  }
+
+  return 'no task';
 });
 
 ipcMain.handle('tasks-list', (event, args) => {
-  const tasks = taskList();
+  const tasks = listTasksOfGroups();
   return tasks;
 });
 
