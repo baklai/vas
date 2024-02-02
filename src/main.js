@@ -85,7 +85,7 @@ app.on('ready', async () => {
     }
   ]);
 
-  tray.setTitle('VAS | Vasyl'); 
+  tray.setTitle('VAS | Vasyl');
 
   tray.setToolTip('Voice Assistant System');
 
