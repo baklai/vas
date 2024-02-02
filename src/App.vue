@@ -11,13 +11,13 @@ const assistant = useAssistant();
 onMounted(async () => {
   await assistant.initialize();
   await assistant.play('moyi-vitannya-ya-na-zvyazku');
-  // if (assistant.isToken) {
-  //   await assistant.play('pryvit-ya-vasyl-chym-ya-mozhu-dopomohty-sohodni');
-  //   await assistant.listening();
-  // } else {
-  //   await assistant.play('na-danyy-chas-ya-obmezhenyy-u-svoyikh-mozhlyvostyakh');
-  //   await assistant.play('vidsutniy-klyuch-dostupu-do-openai');
-  // }
+  if (assistant.isToken) {
+    await assistant.play('pryvit-ya-vasyl-chym-ya-mozhu-dopomohty-sohodni');
+    await assistant.listening();
+  } else {
+    await assistant.play('na-danyy-chas-ya-obmezhenyy-u-svoyikh-mozhlyvostyakh');
+    await assistant.play('vidsutniy-klyuch-dostupu-do-openai');
+  }
 });
 </script>
 
