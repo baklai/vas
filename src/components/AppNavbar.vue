@@ -2,6 +2,9 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
+import iconRestore from '@/assets/img/icon-restore.png';
+import iconMaximize from '@/assets/img/icon-maximize.png';
+
 const Router = useRouter();
 
 const isMenu = ref(false);
@@ -55,7 +58,7 @@ onMounted(() => {
   <div class="flex items-stretch fixed w-full max-h-10 top-0 bg-stone-900 drag">
     <div class="flex justify-start w-4/12 h-10">
       <button class="h-full w-10 flex items-center justify-center no-drag" @click="showHideMenu">
-        <img src="/images/icon-menu.png" alt="menu" width="24" height="24" />
+        <img src="@/assets/img/icon-menu.png" alt="menu" width="24" height="24" />
       </button>
     </div>
     <div class="flex grow text-center items-center justify-center">
@@ -68,14 +71,14 @@ onMounted(() => {
         class="h-full w-10 flex items-center justify-center hover:bg-stone-700 no-drag"
         @click="onMinimize"
       >
-        <img src="/images/icon-minimize.png" alt="minimize" width="24" height="24" />
+        <img src="@/assets/img/icon-minimize.png" alt="minimize" width="24" height="24" />
       </button>
       <button
         class="h-full w-10 flex items-center justify-center hover:bg-stone-700 no-drag"
         @click="onMaximize"
       >
         <img
-          :src="isMaximized ? '/images/icon-restore.png' : '/images/icon-maximize.png'"
+          :src="isMaximized ? iconRestore : iconMaximize"
           alt="restore/maximize"
           width="24"
           height="24"
@@ -85,7 +88,7 @@ onMounted(() => {
         class="h-full w-10 flex items-center justify-center hover:bg-red-700 no-drag"
         @click="onClose"
       >
-        <img src="/images/icon-close.png" alt="close" width="24" height="24" />
+        <img src="@/assets/img/icon-close.png" alt="close" width="24" height="24" />
       </button>
     </div>
 
