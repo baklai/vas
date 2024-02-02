@@ -59,7 +59,7 @@ const createWindow = async () => {
   });
 
   // Open Dev Tools
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 };
 
 app.on('ready', async () => {

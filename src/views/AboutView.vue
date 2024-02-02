@@ -11,7 +11,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="m-auto w-3/4 lg:w-2/4 xl:w-1/4 py-20">
+  <div class="m-auto w-3/4 lg:w-2/4 xl:w-1/4 py-10">
     <div class="text-center mb-8">
       <IconAssistant class="mx-auto max-w-2xl text-center text-stone-400" />
       <h1 class="text-2xl tracking-tight font-bold text-stone-100">Привіт, я Василь!</h1>

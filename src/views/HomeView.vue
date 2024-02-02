@@ -13,12 +13,12 @@ const assistant = useAssistant();
 </script>
 
 <template>
-  <div class="py-20 sm:py-30 overflow-auto">
+  <div class="py-10 overflow-auto">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">
         <AppPreview />
 
-        <section class="mx-auto text-center my-14" v-if="assistant.isToken">
+        <section class="mx-auto text-center my-10" v-if="assistant.isToken">
           <IconSensor width="180" height="180" color="#22c55e" v-show="assistant.sensor" />
 
           <IconSpinner width="180" height="180" color="#22c55e" v-show="assistant.spinner" />
