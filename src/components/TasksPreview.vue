@@ -15,8 +15,8 @@
                 <div class="flex w-full items-center justify-between">
                   <div class="flex flex-col overflow-hidden">
                     <div class="truncate text-stone-300">Котра година?</div>
-                    <div class="truncate font-normal text-stone-300">
-                      <span>для відтворення поточного часу</span>
+                    <div class="truncate font-normal text-stone-400">
+                      для відтворення поточного часу
                     </div>
                   </div>
                 </div>
@@ -32,7 +32,7 @@
                 <div class="flex w-full items-center justify-between">
                   <div class="flex flex-col overflow-hidden">
                     <div class="truncate text-stone-300">Варианты кодовых названий</div>
-                    <div class="truncate font-normal text-stone-300">
+                    <div class="truncate font-normal text-stone-400">
                       для проекта по внедрению гибкого графика работы
                     </div>
                   </div>
@@ -51,7 +51,7 @@
                 <div class="flex w-full items-center justify-between">
                   <div class="flex flex-col overflow-hidden">
                     <div class="truncate text-stone-300">Котра година?</div>
-                    <div class="truncate font-normal text-stone-300">
+                    <div class="truncate font-normal text-stone-400">
                       для відтворення поточного часу
                     </div>
                   </div>
@@ -68,7 +68,7 @@
                 <div class="flex w-full items-center justify-between">
                   <div class="flex flex-col overflow-hidden">
                     <div class="truncate text-stone-300">Варианты кодовых названий</div>
-                    <div class="truncate font-normal text-stone-300">
+                    <div class="truncate font-normal text-stone-400">
                       для проекта по внедрению гибкого графика работы
                     </div>
                   </div>

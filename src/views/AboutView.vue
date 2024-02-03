@@ -6,7 +6,7 @@ import IconAssistant from '@/components/icons/IconAssistant.vue';
 const versions = ref([]);
 
 onMounted(async () => {
-  versions.value = await window.api.receive('versions');
+  versions.value = await window.api.versions();
 });
 </script>
 

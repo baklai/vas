@@ -272,6 +272,7 @@ export const useAssistant = defineStore('assistant', () => {
 
           if (task) {
             await play('zadacha-uspishno-vykonana');
+            await textToSpeech(task);
           } else {
             await play('shchos-ya-tebe-ne-zrozumiv');
           }

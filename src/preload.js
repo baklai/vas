@@ -1,8 +1,25 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('api', {
+  versions: () => {
+    const versions = [
+      { key: 'version', title: 'Version' },
+      { key: 'chrome', title: 'Chromium' },
+      { key: 'electron', title: 'Electron' },
+      { key: 'node', title: 'Node.js' },
+      { key: 'v8', title: 'V8' }
+    ];
+
+    return versions.map(item => {
+      return {
+        ...item,
+        version: process.versions[item.key] || '-'
+      };
+    });
+  },
+
   receive: async (channel, data) => {
-    const validChannels = ['versions', 'tasks', 'tasks-list'];
+    const validChannels = ['tasks', 'tasks-list'];
     if (validChannels.includes(channel)) {
       return await ipcRenderer.invoke(channel, data);
     }
@@ -14,6 +31,7 @@ contextBridge.exposeInMainWorld('api', {
       ipcRenderer.send(channel, data);
     }
   },
+
   on: (channel, func) => {
     const validChannels = ['isMaximized', 'isRestored'];
     if (validChannels.includes(channel)) {

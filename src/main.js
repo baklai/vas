@@ -43,7 +43,9 @@ const createWindow = async () => {
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
-    mainWindow.loadFile(join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
+    mainWindow.loadFile(
+      join(__dirname, '..', 'renderer', `${MAIN_WINDOW_VITE_NAME}`, 'index.html')
+    );
   }
 
   mainWindow.setBackgroundColor('#292524');
@@ -121,7 +123,7 @@ ipcMain.handle('tasks', (event, request) => {
   const tasks = listOfTasks();
   const task = similarOfTasks(request, tasks);
   if (task) {
-    return 'task';
+    return task.action();
   }
 
   return;
@@ -130,21 +132,4 @@ ipcMain.handle('tasks', (event, request) => {
 ipcMain.handle('tasks-list', (event, args) => {
   const tasks = listTasksOfGroups();
   return tasks;
-});
-
-ipcMain.handle('versions', (event, args) => {
-  const versions = [
-    { key: 'version', title: 'Version' },
-    { key: 'chrome', title: 'Chromium' },
-    { key: 'electron', title: 'Electron' },
-    { key: 'node', title: 'Node.js' },
-    { key: 'v8', title: 'V8' }
-  ];
-
-  return versions.map(item => {
-    return {
-      ...item,
-      version: process.versions[item.key] || '-'
-    };
-  });
 });
