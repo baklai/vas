@@ -1,6 +1,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
+import { useVasTasks } from '@/stores/vastasks';
+
+const vastasks = useVasTasks();
+
 const tasksList = ref([]);
 
 const selectTask = ref(null);
@@ -13,8 +17,8 @@ const toggleTask = task => {
   }
 };
 
-onMounted(async () => {
-  tasksList.value = await window.api.receive('tasks-list', null);
+onMounted(() => {
+  tasksList.value = vastasks.listTasksOfGroups();
 });
 </script>
 

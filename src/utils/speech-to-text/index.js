@@ -1,3 +1,0 @@
-/**
- * Module: Speech to text
- */

@@ -19,7 +19,7 @@ contextBridge.exposeInMainWorld('api', {
   },
 
   receive: async (channel, data) => {
-    const validChannels = ['tasks', 'tasks-list'];
+    const validChannels = [];
     if (validChannels.includes(channel)) {
       return await ipcRenderer.invoke(channel, data);
     }

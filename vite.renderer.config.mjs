@@ -6,7 +6,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 export default defineConfig({
-  plugins: [vue(), vueJsx(), nodePolyfills()],
+  plugins: [vue(), vueJsx()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

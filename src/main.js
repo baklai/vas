@@ -10,10 +10,6 @@ import {
 } from 'electron';
 import { join } from 'path';
 
-import { listOfTasks, listTasksOfGroups } from './data/tasks';
-
-import similarOfTasks from './utils/string-distance';
-
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
@@ -119,17 +115,17 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.handle('tasks', (event, request) => {
-  const tasks = listOfTasks();
-  const task = similarOfTasks(request, tasks);
-  if (task) {
-    return task.action();
-  }
+// ipcMain.handle('tasks', (event, request) => {
+//   const tasks = listOfTasks();
+//   const task = similarOfTasks(request, tasks);
+//   if (task) {
+//     return task.action();
+//   }
 
-  return;
-});
+//   return;
+// });
 
-ipcMain.handle('tasks-list', (event, args) => {
-  const tasks = listTasksOfGroups();
-  return tasks;
-});
+// ipcMain.handle('tasks-list', (event, args) => {
+//   const tasks = listTasksOfGroups();
+//   return tasks;
+// });
