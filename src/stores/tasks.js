@@ -7,7 +7,7 @@ import 'moment/dist/locale/uk';
 
 const SIMILARITY_ACCURACY = 0.95;
 
-export const useVasTasks = defineStore('vastasks', () => {
+export const useTasks = defineStore('tasks', () => {
   const tasks = ref({
     base: {
       group: 'Базові функції',
@@ -32,7 +32,9 @@ export const useVasTasks = defineStore('vastasks', () => {
   function findTask(request) {
     if (!request?.length) return;
 
-    for (const task of tasks.value) {
+    const arrTasks = listOfTasks();
+
+    for (const task of arrTasks) {
       const similar = jaroWinklerDistance(request.toUpperCase(), task.request.toUpperCase());
 
       if (similar >= SIMILARITY_ACCURACY) return task;

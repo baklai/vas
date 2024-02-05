@@ -6,12 +6,16 @@ import * as SpeechCommands from '@tensorflow-models/speech-commands';
 import Wave from 'wave-visualizer';
 import axios from 'axios';
 
+import { useTasks } from '@/stores/tasks';
+
 const BASE_OPENAI_API = 'https://api.openai.com/v1';
 
 const BASE_SOUNDS_PATH = 'sounds';
 const BASE_SOUNDS_EXT = 'mp3';
 
 export const useAssistant = defineStore('assistant', () => {
+  const tasks = useTasks();
+
   const openAIToken = ref();
   const recognizer = ref();
   const spinner = ref(false);
@@ -268,11 +272,12 @@ export const useAssistant = defineStore('assistant', () => {
 
           const audioData = await recording();
           const text = await speechToText(audioData);
-          const task = await window.api.receive('tasks', text);
+          const task = await tasks.findTask(text);
 
-          if (task) {
+          if (typeof task?.action === 'function') {
+            const response = task.action();
             await play('zadacha-uspishno-vykonana');
-            await textToSpeech(task);
+            await textToSpeech(response);
           } else {
             await play('shchos-ya-tebe-ne-zrozumiv');
           }
