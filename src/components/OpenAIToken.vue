@@ -14,7 +14,7 @@ const saveToken = () => {
 
 <template>
   <form @submit.prevent="saveToken">
-    <div class="relative">
+    <div class="relative mb-2">
       <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
         <svg
           viewBox="0 0 320 320"
@@ -30,18 +30,11 @@ const saveToken = () => {
 
       <input
         v-model="token"
-        type="password"
-        class="block w-full p-4 ps-10 text-base text-stone-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500"
-        placeholder="Введіть ключ доступу до OpenAI"
         required
+        type="password"
+        class="block w-full p-2 ps-10 text-base text-stone-900 border border-stone-300 rounded-lg bg-stone-100 focus:ring-green-500 focus:border-green-500"
+        placeholder="Введіть ключ доступу до OpenAI"
       />
-
-      <button
-        type="submit"
-        class="text-white absolute end-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2"
-      >
-        Прийняти
-      </button>
     </div>
     <span class="text-xs text-stone-500 font-medium">
       В процесі роботи асистент використовує
