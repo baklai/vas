@@ -55,45 +55,47 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex items-stretch fixed w-full max-h-10 top-0 bg-stone-900 drag">
-    <div class="flex justify-start w-4/12 h-10">
-      <button class="h-full w-10 flex items-center justify-center no-drag" @click="showHideMenu">
-        <img src="@/assets/img/icon-menu.png" alt="menu" width="24" height="24" />
-      </button>
-    </div>
-    <div class="flex grow text-center items-center justify-center">
-      <p class="uppercase text-center text-stone-50 font-bold truncate">
-        {{ $route.meta.title || 'Voice Assistant System' }}
-      </p>
-    </div>
-    <div class="flex justify-end w-4/12 h-10">
-      <button
-        class="h-full w-10 flex items-center justify-center hover:bg-stone-700 no-drag"
-        @click="onMinimize"
-      >
-        <img src="@/assets/img/icon-minimize.png" alt="minimize" width="24" height="24" />
-      </button>
-      <button
-        class="h-full w-10 flex items-center justify-center hover:bg-stone-700 no-drag"
-        @click="onMaximize"
-      >
-        <img
-          :src="isMaximized ? iconRestore : iconMaximize"
-          alt="restore/maximize"
-          width="24"
-          height="24"
-        />
-      </button>
-      <button
-        class="h-full w-10 flex items-center justify-center hover:bg-red-700 no-drag"
-        @click="onClose"
-      >
-        <img src="@/assets/img/icon-close.png" alt="close" width="24" height="24" />
-      </button>
+  <div class="flex flex-col items-stretch w-full top-0">
+    <div class="flex w-full bg-stone-900 drag">
+      <div class="flex justify-start w-4/12 h-10">
+        <button class="h-full w-10 flex items-center justify-center no-drag" @click="showHideMenu">
+          <img src="@/assets/img/icon-menu.png" alt="menu" width="24" height="24" />
+        </button>
+      </div>
+      <div class="flex grow text-center items-center justify-center">
+        <p class="uppercase text-center text-stone-50 font-bold truncate">
+          {{ $route.meta.title || 'Voice Assistant System' }}
+        </p>
+      </div>
+      <div class="flex justify-end w-4/12 h-10">
+        <button
+          class="h-full w-10 flex items-center justify-center hover:bg-stone-700 no-drag"
+          @click="onMinimize"
+        >
+          <img src="@/assets/img/icon-minimize.png" alt="minimize" width="24" height="24" />
+        </button>
+        <button
+          class="h-full w-10 flex items-center justify-center hover:bg-stone-700 no-drag"
+          @click="onMaximize"
+        >
+          <img
+            :src="isMaximized ? iconRestore : iconMaximize"
+            alt="restore/maximize"
+            width="24"
+            height="24"
+          />
+        </button>
+        <button
+          class="h-full w-10 flex items-center justify-center hover:bg-red-700 no-drag"
+          @click="onClose"
+        >
+          <img src="@/assets/img/icon-close.png" alt="close" width="24" height="24" />
+        </button>
+      </div>
     </div>
 
     <Transition>
-      <nav class="absolute z-10 w-full my-10" v-show="isMenu">
+      <nav class="w-full" v-show="isMenu">
         <div class="shadow-sm border-y bg-stone-800 border-stone-700">
           <div
             class="grid overflow-auto max-w-screen-xl px-4 py-5 mx-auto sm:grid-cols-2 md:grid-cols-3 md:px-6 h-screen sm:h-auto"
