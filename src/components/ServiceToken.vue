@@ -1,25 +1,21 @@
 <script setup>
-import { ref } from 'vue';
+import { useOptions } from '@/stores/options';
 
-import { useAssistant } from '@/stores/assistant';
+const options = useOptions();
 
-const assistant = useAssistant();
-
-const token = ref();
-
-const saveToken = () => {
-  assistant.setToken(token.value);
+const setToken = () => {
+  options.setToken(options.token);
 };
 </script>
 
 <template>
-  <form @submit.prevent="saveToken">
+  <form @submit.prevent="setToken">
     <div class="relative mb-2">
       <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
         <svg
           viewBox="0 0 320 320"
           xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6 fill-stone-900"
+          class="w-6 h-6 fill-stone-400"
         >
           <path
             stroke="currentColor"
@@ -29,18 +25,36 @@ const saveToken = () => {
       </div>
 
       <input
-        v-model="token"
         required
         type="password"
-        class="block w-full p-2 ps-10 text-base text-stone-900 border border-stone-300 rounded-lg bg-stone-100 focus:ring-green-500 focus:border-green-500"
-        placeholder="Введіть ключ доступу до OpenAI"
+        v-model="options.token"
+        class="block w-full p-2 ps-10 text-base text-stone-100 placeholder-stone-400 border border-stone-600 rounded-lg bg-transparent focus:ring-green-500 focus:border-green-500"
+        placeholder="Введіть ключ доступу до OpenAI API"
+        title="Введіть ключ доступу до OpenAI API"
       />
+
+      <button
+        type="submit"
+        class="absolute top-0 end-0 p-2.5 h-full text-sm font-medium text-stone-100 rounded-e-lg border border-stone-600 focus:ring-4 focus:outline-none bg-green-600 hover:bg-green-700 focus:ring-green-800"
+      >
+        <svg
+          class="w-5 h-5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="currentColor"
+            d="M17 3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V7L17 3M19 19H5V5H16.17L19 7.83V19M12 12C10.34 12 9 13.34 9 15S10.34 18 12 18 15 16.66 15 15 13.66 12 12 12M6 6H15V10H6V6Z"
+          />
+        </svg>
+      </button>
     </div>
     <span class="text-xs text-stone-500 font-medium">
       В процесі роботи асистент використовує
       <a
         href="https://platform.openai.com/docs/overview"
-        class="font-medium text-green-800 whitespace-nowrap"
+        class="font-medium text-green-700 hover:text-green-600 whitespace-nowrap"
       >
         API OpenAI
       </a>

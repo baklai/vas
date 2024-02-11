@@ -1,15 +1,15 @@
 <script setup>
 import AppPreview from '@/components/AppPreview.vue';
-import OpenAIToken from '@/components/OpenAIToken.vue';
+import ServiceToken from '@/components/ServiceToken.vue';
 import TasksPreview from '@/components/TasksPreview.vue';
 import CanvasWaver from '@/components/CanvasWaver.vue';
 
 import IconSensor from '@/components/icons/IconSensor.vue';
 import IconSpinner from '@/components/icons/IconSpinner.vue';
 
-import { useAssistant } from '@/stores/assistant';
+import { useOptions } from '@/stores/options';
 
-const assistant = useAssistant();
+const options = useOptions();
 </script>
 
 <template>
@@ -18,25 +18,25 @@ const assistant = useAssistant();
       <div class="mx-auto max-w-2xl text-center">
         <AppPreview />
 
-        <section class="mx-auto text-center my-10" v-if="assistant.isToken">
-          <IconSensor width="180" height="180" color="#22c55e" v-show="assistant.sensor" />
+        <section class="mx-auto text-center my-10" v-if="options.isToken">
+          <IconSensor width="180" height="180" color="#22c55e" v-show="options.isSensor" />
 
-          <IconSpinner width="180" height="180" color="#22c55e" v-show="assistant.spinner" />
+          <IconSpinner width="180" height="180" color="#22c55e" v-show="options.isSpinner" />
 
           <CanvasWaver
             id="waver"
             width="300"
             height="180"
             color="#22c55e"
-            v-show="assistant.waver"
+            v-show="options.isWaver"
           />
         </section>
 
         <section class="mx-auto text-center my-14 w-9/12" v-else>
-          <OpenAIToken />
+          <ServiceToken />
         </section>
 
-        <section class="mx-auto text-center my-20 w-10/12" v-if="assistant.isToken">
+        <section class="mx-auto text-center my-20 w-10/12" v-if="options.isToken">
           <TasksPreview />
         </section>
       </div>

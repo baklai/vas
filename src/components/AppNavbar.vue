@@ -5,7 +5,11 @@ import { useRouter } from 'vue-router';
 import iconRestore from '@/assets/img/icon-restore.png';
 import iconMaximize from '@/assets/img/icon-maximize.png';
 
+import { useAssistant } from '@/stores/assistant';
+
 const Router = useRouter();
+
+const assistant = useAssistant();
 
 const isMenu = ref(false);
 const isMaximized = ref(false);
@@ -34,7 +38,8 @@ const onMaximize = () => {
   window.api.send('maximize', true);
 };
 
-const onClose = () => {
+const onClose = async () => {
+  await assistant.stoping();
   window.api.send('close', true);
 };
 

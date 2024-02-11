@@ -5,19 +5,22 @@ import { RouterView } from 'vue-router';
 import AppNavbar from '@/components/AppNavbar.vue';
 
 import { useAssistant } from '@/stores/assistant';
+import { useOptions } from '@/stores/options';
 
 const assistant = useAssistant();
+const options = useOptions();
 
 onMounted(async () => {
   await assistant.initialize();
-  await assistant.play('moyi-vitannya-ya-na-zvyazku');
-  if (assistant.isToken) {
-    await assistant.play('pryvit-ya-vasyl-chym-ya-mozhu-dopomohty-sohodni');
-    await assistant.listening();
-  } else {
-    await assistant.play('na-danyy-chas-ya-obmezhenyy-u-svoyikh-mozhlyvostyakh');
-    await assistant.play('vidsutniy-klyuch-dostupu-do-openai');
+
+  if (!options.isToken) return;
+  if (!options.isAutostart) return;
+
+  if (options.isMsgWelcomeStatus) {
+    await assistant.textToSpeech(options.msgWelcome);
   }
+
+  // await assistant.listening();
 });
 </script>
 

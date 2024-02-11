@@ -4,68 +4,26 @@ import { defineStore } from 'pinia';
 import * as tf from '@tensorflow/tfjs';
 import * as SpeechCommands from '@tensorflow-models/speech-commands';
 import Wave from 'wave-visualizer';
-import axios from 'axios';
 
+import { useOptions } from '@/stores/options';
 import { useTasks } from '@/stores/tasks';
-
-const BASE_OPENAI_API = 'https://api.openai.com/v1';
+import { useApi } from '@/stores/apiservice';
 
 const BASE_SOUNDS_PATH = 'sounds';
 const BASE_SOUNDS_EXT = 'mp3';
 
 export const useAssistant = defineStore('assistant', () => {
+  const options = useOptions();
   const tasks = useTasks();
+  const api = useApi();
 
-  const openAIToken = ref();
   const recognizer = ref();
-  const spinner = ref(false);
-  const sensor = ref(false);
-  const waver = ref(false);
-
-  const isToken = computed(() => !!openAIToken.value);
 
   const isListening = computed(() => recognizer.value.isListening());
 
-  function getToken() {
-    return openAIToken.value;
-  }
-
-  function setToken(token) {
-    openAIToken.value = token;
-    localStorage.setItem('openai-api-token', token);
-  }
-
-  function animation(element) {
-    switch (element) {
-      case 'spinner':
-        waver.value = false;
-        sensor.value = false;
-
-        spinner.value = true;
-        break;
-      case 'sensor':
-        waver.value = false;
-        spinner.value = false;
-
-        sensor.value = true;
-        break;
-      case 'waver':
-        sensor.value = false;
-        spinner.value = false;
-
-        waver.value = true;
-        break;
-      default:
-        waver.value = false;
-        sensor.value = false;
-        spinner.value = false;
-        break;
-    }
-  }
-
   async function play(audioBlobOrFile) {
     return new Promise((resolve, reject) => {
-      animation('sensor');
+      options.setAnimation('sensor');
 
       const audioURL =
         typeof audioBlobOrFile === 'string'
@@ -86,82 +44,24 @@ export const useAssistant = defineStore('assistant', () => {
     });
   }
 
-  async function chatGPT(text) {
-    const jsonData = {
-      model: 'gpt-3.5-turbo',
-      max_tokens: 300,
-      messages: [
-        {
-          role: 'system',
-          content:
-            'Тебе кличуть Василь. Ти голосовий помічник, який дає короткі та чіткі відповіді.'
-        },
-        {
-          role: 'user',
-          content: text
-        }
-      ]
-    };
-
-    animation('spinner');
-
-    const response = await axios.post(`${BASE_OPENAI_API}/chat/completions`, jsonData, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-        'Content-Type': 'application/json'
-      },
-      responseType: 'json'
-    });
-
-    return response.data.choices[0].message.content;
+  async function gptToSpeech(text) {
+    options.setAnimation('spinner');
+    const audioBlob = await api.completions(text);
+    await play(audioBlob);
   }
 
   async function textToSpeech(text) {
-    const jsonData = {
-      model: 'tts-1',
-      voice: 'onyx',
-      speed: 0.9,
-      response_format: 'mp3',
-      input: text
-    };
-
-    animation('spinner');
-
-    const response = await axios.post(`${BASE_OPENAI_API}/audio/speech`, jsonData, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-        'Content-Type': 'application/json'
-      },
-      responseType: 'arraybuffer'
-    });
-
-    const audioBlob = new Blob([response.data], { type: 'audio/mp3' });
-
+    options.setAnimation('spinner');
+    const audioBlob = await api.speech(text);
     await play(audioBlob);
   }
 
   async function speechToText(audioBlob) {
-    const formData = new FormData();
-    formData.append('file', audioBlob, 'speech.mp3');
-    formData.append('language', 'uk');
-    formData.append('model', 'whisper-1');
-    formData.append('response_format', 'text');
-
-    animation('spinner');
-
-    const response = await axios.post(`${BASE_OPENAI_API}/audio/transcriptions`, formData, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-        'Content-Type': 'multipart/form-data'
-      },
-      responseType: 'text'
-    });
-
-    return response.data;
+    options.setAnimation('spinner');
+    return await api.transcriptions(audioBlob);
   }
 
   async function initialize() {
-    openAIToken.value = localStorage.getItem('openai-api-token');
     const model = SpeechCommands.create(
       'BROWSER_FFT',
       undefined,
@@ -171,7 +71,7 @@ export const useAssistant = defineStore('assistant', () => {
     await model.ensureModelLoaded();
     recognizer.value = model;
 
-    animation('sensor');
+    options.setAnimation('sensor');
   }
 
   async function recording() {
@@ -211,7 +111,7 @@ export const useAssistant = defineStore('assistant', () => {
       try {
         await play('zvukovyy-syhnal');
 
-        animation('waver');
+        options.setAnimation('waver');
 
         const audioStream = await navigator.mediaDevices.getUserMedia({
           audio: true
@@ -248,7 +148,7 @@ export const useAssistant = defineStore('assistant', () => {
 
   async function listening() {
     if (!recognizer.value) return;
-    animation('sensor');
+    options.setAnimation('sensor');
 
     const classLabels = recognizer.value.wordLabels();
 
@@ -295,22 +195,18 @@ export const useAssistant = defineStore('assistant', () => {
   }
 
   async function stoping() {
-    animation('off');
+    options.setAnimation('off');
     if (recognizer.value.isListening()) {
       await recognizer.value.stopListening();
-      await play('vsoho-naykrashchoho-do-zustrichi');
+    }
+    if (options.msgGoodbyeStatus) {
+      await textToSpeech(options.msgGoodbye);
     }
   }
 
   return {
-    spinner,
-    sensor,
-    waver,
-    isToken,
     isListening,
-    play,
-    setToken,
-    chatGPT,
+    gptToSpeech,
     textToSpeech,
     speechToText,
     initialize,
