@@ -33,7 +33,7 @@ contextBridge.exposeInMainWorld('api', {
   },
 
   on: (channel, func) => {
-    const validChannels = ['isMaximized', 'isRestored'];
+    const validChannels = ['isMaximized', 'isRestored', 'router'];
     if (validChannels.includes(channel)) {
       ipcRenderer.on(channel, (event, ...args) => func(...args));
     }

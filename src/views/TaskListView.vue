@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-import { useVasTasks } from '@/stores/vastasks';
+import { useTasks } from '@/stores/tasks';
 
-const vastasks = useVasTasks();
+const vastasks = useTasks();
 
 const tasksList = ref([]);
 

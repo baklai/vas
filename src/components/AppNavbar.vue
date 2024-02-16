@@ -39,7 +39,7 @@ const onMaximize = () => {
 };
 
 const onClose = async () => {
-  await assistant.stoping();
+  // await assistant.stoping();
   window.api.send('close', true);
 };
 

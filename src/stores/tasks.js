@@ -25,7 +25,55 @@ export const useTasks = defineStore('tasks', () => {
         }
       ]
     },
-    system: { group: 'Операційна система', tasks: [] },
+    system: {
+      group: 'Операційна система',
+      tasks: [
+        {
+          request: 'Відкрий блокнот!',
+          description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          action: () => {
+            const currentDate = new Date();
+            const hh = moment.duration(currentDate.getHours(), 'h').locale('uk').humanize();
+            const mm = moment.duration(currentDate.getMinutes(), 'm').locale('uk').humanize();
+
+            return `Поточний час: ${hh}, ${mm}`;
+          }
+        },
+        {
+          request: 'Відкрий браузер!',
+          description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          action: () => {
+            const currentDate = new Date();
+            const hh = moment.duration(currentDate.getHours(), 'h').locale('uk').humanize();
+            const mm = moment.duration(currentDate.getMinutes(), 'm').locale('uk').humanize();
+
+            return `Поточний час: ${hh}, ${mm}`;
+          }
+        },
+        {
+          request: 'Презавантаж компьютер!',
+          description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          action: () => {
+            const currentDate = new Date();
+            const hh = moment.duration(currentDate.getHours(), 'h').locale('uk').humanize();
+            const mm = moment.duration(currentDate.getMinutes(), 'm').locale('uk').humanize();
+
+            return `Поточний час: ${hh}, ${mm}`;
+          }
+        },
+        {
+          request: 'Вимкни компьютер!',
+          description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          action: () => {
+            const currentDate = new Date();
+            const hh = moment.duration(currentDate.getHours(), 'h').locale('uk').humanize();
+            const mm = moment.duration(currentDate.getMinutes(), 'm').locale('uk').humanize();
+
+            return `Поточний час: ${hh}, ${mm}`;
+          }
+        }
+      ]
+    },
     chatgpt: { group: 'Бесіда з ChatGPT', tasks: [] }
   });
 

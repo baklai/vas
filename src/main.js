@@ -66,6 +66,50 @@ const createWindow = async () => {
     }
   });
 
+  const icon = nativeImage.createFromPath(
+    join(__dirname, '..', 'build', 'icons', 'win', 'icon.ico')
+  );
+
+  const tray = new Tray(icon);
+
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'Асистент',
+      type: 'normal',
+      click: () => mainWindow.webContents.send('router', 'home')
+    },
+    { type: 'separator' },
+    {
+      label: 'Нова задача',
+      type: 'normal',
+      click: () => mainWindow.webContents.send('router', 'task')
+    },
+    {
+      label: 'Перелік задач',
+      type: 'normal',
+      click: () => mainWindow.webContents.send('router', 'tasks')
+    },
+    {
+      label: 'Налаштування',
+      type: 'normal',
+      click: () => mainWindow.webContents.send('router', 'option')
+    },
+    { type: 'separator' },
+    {
+      label: 'Про програму',
+      type: 'normal',
+      click: () => mainWindow.webContents.send('router', 'about')
+    },
+    { type: 'separator' },
+    { label: 'Вихід', type: 'normal', click: () => app.quit() }
+  ]);
+
+  tray.setTitle('VAS | Vasyl');
+
+  tray.setToolTip('Voice Assistant System');
+
+  tray.setContextMenu(contextMenu);
+
   // Dark Theme
   nativeTheme.themeSource = 'dark';
 
@@ -79,28 +123,6 @@ app.on('ready', async () => {
   ipcMain.on('close', (event, args) => {
     app.quit();
   });
-
-  const icon = nativeImage.createFromPath(
-    join(__dirname, '..', 'build', 'icons', 'win', 'icon.ico')
-  );
-
-  const tray = new Tray(icon);
-
-  const contextMenu = Menu.buildFromTemplate([
-    { label: 'Відкрити', type: 'normal' },
-    { type: 'separator' },
-    {
-      label: 'Вихід',
-      type: 'normal',
-      click: () => app.quit()
-    }
-  ]);
-
-  tray.setTitle('VAS | Vasyl');
-
-  tray.setToolTip('Voice Assistant System');
-
-  tray.setContextMenu(contextMenu);
 });
 
 app.on('window-all-closed', () => {

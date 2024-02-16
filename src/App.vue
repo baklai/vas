@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue';
-import { RouterView } from 'vue-router';
+import { useRouter, RouterView } from 'vue-router';
 
 import AppNavbar from '@/components/AppNavbar.vue';
 
@@ -9,8 +9,13 @@ import { useOptions } from '@/stores/options';
 
 const assistant = useAssistant();
 const options = useOptions();
+const router = useRouter();
 
 onMounted(async () => {
+  window.api.on('router', name => {
+    router.push({ name });
+  });
+
   await assistant.initialize();
 
   if (!options.isToken) return;
@@ -20,7 +25,7 @@ onMounted(async () => {
     await assistant.textToSpeech(options.msgWelcome);
   }
 
-  // await assistant.listening();
+  await assistant.listening();
 });
 </script>
 

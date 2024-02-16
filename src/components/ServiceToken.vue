@@ -28,7 +28,7 @@ const setToken = () => {
         required
         type="password"
         v-model="options.token"
-        class="block w-full p-2 ps-10 text-base text-stone-100 placeholder-stone-400 border border-stone-600 rounded-lg bg-transparent focus:ring-green-500 focus:border-green-500"
+        class="block w-full p-2 ps-10 text-sm text-stone-100 placeholder-stone-400 border border-stone-600 rounded-lg bg-transparent focus:ring-green-500 focus:border-green-500"
         placeholder="Введіть ключ доступу до OpenAI API"
         title="Введіть ключ доступу до OpenAI API"
       />
