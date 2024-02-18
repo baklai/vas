@@ -70,12 +70,10 @@ export const useAssistant = defineStore('assistant', () => {
     );
     await model.ensureModelLoaded();
     recognizer.value = model;
-
-    options.setAnimation('sensor');
   }
 
   async function recording() {
-    const silence = (audioStream, exitOnSilence = 5, callback) => {
+    const silence = (audioStream, exitOnSilence = 3, callback) => {
       const audioContext = new AudioContext();
       let exitOnSilenceCount = 0;
       const gainNode = audioContext.createGain();

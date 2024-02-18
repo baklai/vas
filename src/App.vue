@@ -25,13 +25,16 @@ onMounted(async () => {
     await assistant.textToSpeech(options.msgWelcome);
   }
 
-  await assistant.listening();
+  if (options.isAutostart) {
+    console.log(typeof options.isAutostart);
+    await assistant.listening();
+  }
 });
 </script>
 
 <template>
   <AppNavbar />
-  <main class="h-full pt-10 overflow-auto bg-stone-800">
+  <main class="h-full overflow-auto bg-stone-800">
     <router-view v-slot="{ Component }">
       <transition name="fade">
         <component :is="Component" />

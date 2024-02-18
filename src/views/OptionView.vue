@@ -5,24 +5,8 @@ import { useOptions } from '@/stores/options';
 
 const options = useOptions();
 
-const setStartup = event => {
-  options.setStartup(event.target.value);
-};
-
-const setAutostart = event => {
-  options.setAutostart(event.target.value);
-};
-
-const setMsgWelcomeStatus = event => {
-  options.setMsgWelcomeStatus(event.target.value);
-};
-
 const setMsgWelcome = event => {
   options.setMsgWelcome(event.target.value);
-};
-
-const setMsgGoodbyeStatus = event => {
-  options.setMsgGoodbyeStatus(event.target.value);
 };
 
 const setMsgGoodbye = event => {
@@ -32,7 +16,7 @@ const setMsgGoodbye = event => {
 
 <template>
   <div class="grid gap-6 mb-6 md:grid-cols-2 m-auto px-4 py-10 lg:w-4/6">
-    <div class="p-4 border rounded-lg border-stone-600 bg-stone-900">
+    <div class="p-4 border rounded-lg border-stone-600">
       <div class="flex justify-between items-center">
         <div class="flex items-center">
           <svg
@@ -57,10 +41,8 @@ const setMsgGoodbye = event => {
           <input
             required
             type="checkbox"
-            :value="options.startup"
             v-model="options.startup"
             class="w-4 h-4 border rounded focus:ring-3 bg-stone-700 border-stone-600 focus:ring-blue-600 ring-offset-stone-800"
-            @change="setStartup"
           />
         </div>
         <label class="ms-2 text-sm font-medium text-stone-200">
@@ -73,10 +55,8 @@ const setMsgGoodbye = event => {
           <input
             required
             type="checkbox"
-            :value="options.autostart"
             v-model="options.autostart"
             class="w-4 h-4 border rounded focus:ring-3 bg-stone-700 border-stone-600 focus:ring-blue-600 ring-offset-stone-800"
-            @change="setAutostart"
           />
         </div>
         <label class="ms-2 text-sm font-medium text-stone-200">
@@ -85,7 +65,7 @@ const setMsgGoodbye = event => {
       </div>
     </div>
 
-    <div class="p-4 border rounded-lg border-stone-600 bg-stone-900">
+    <div class="p-4 border rounded-lg border-stone-600">
       <div class="flex justify-between items-center">
         <div class="flex items-center">
           <svg
@@ -112,7 +92,7 @@ const setMsgGoodbye = event => {
       </div>
     </div>
 
-    <div class="p-4 border rounded-lg border-stone-600 bg-stone-900">
+    <div class="p-4 border rounded-lg border-stone-600">
       <div class="flex justify-between items-center">
         <div class="flex items-center">
           <svg
@@ -139,10 +119,8 @@ const setMsgGoodbye = event => {
           <input
             required
             type="checkbox"
-            :value="options.msgWelcomeStatus"
             v-model="options.msgWelcomeStatus"
             class="w-4 h-4 border rounded focus:ring-3 bg-stone-700 border-stone-600 focus:ring-blue-600 ring-offset-stone-800"
-            @change="setMsgWelcomeStatus"
           />
         </div>
         <label class="ms-2 text-sm font-medium text-stone-200">
@@ -155,14 +133,14 @@ const setMsgGoodbye = event => {
           required
           type="text"
           v-model="options.msgWelcome"
-          class="border text-sm rounded-lg block w-full p-2.5 bg-stone-900 border-stone-600 placeholder-stone-400 text-white focus:ring-blue-500 focus:border-blue-500"
+          class="border text-sm rounded-lg block w-full p-2.5 bg-stone-800 border-stone-600 placeholder-stone-400 text-white focus:ring-blue-500 focus:border-blue-500"
           placeholder="Вітальне повідомлення"
           @input="setMsgWelcome"
         />
       </div>
     </div>
 
-    <div class="p-4 border rounded-lg border-stone-600 bg-stone-900">
+    <div class="p-4 border rounded-lg border-stone-600">
       <div class="flex justify-between items-center">
         <div class="flex items-center">
           <svg
@@ -189,10 +167,8 @@ const setMsgGoodbye = event => {
           <input
             required
             type="checkbox"
-            :value="options.msgGoodbyeStatus"
             v-model="options.msgGoodbyeStatus"
-            class="w-4 h-4 border rounded focus:ring-3 bg-stone-700 border-stone-600 focus:ring-blue-600 ring-offset-stone-800"
-            @change="setMsgGoodbyeStatus"
+            class="w-4 h-4 border rounded focus:ring-3 bg-stone-800 border-stone-600 focus:ring-blue-600 ring-offset-stone-800"
           />
         </div>
         <label class="ms-2 text-sm font-medium text-stone-200">
@@ -205,7 +181,7 @@ const setMsgGoodbye = event => {
           required
           type="text"
           v-model="options.msgGoodbye"
-          class="border text-sm rounded-lg block w-full p-2.5 bg-stone-900 border-stone-600 placeholder-stone-400 text-white focus:ring-blue-500 focus:border-blue-500"
+          class="border text-sm rounded-lg block w-full p-2.5 bg-stone-800 border-stone-600 placeholder-stone-400 text-white focus:ring-blue-500 focus:border-blue-500"
           placeholder="Прощальне повідомлення"
           @input="setMsgGoodbye"
         />

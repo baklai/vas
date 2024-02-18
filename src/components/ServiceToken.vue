@@ -1,10 +1,22 @@
 <script setup>
+import { useAssistant } from '@/stores/assistant';
 import { useOptions } from '@/stores/options';
 
+const assistant = useAssistant();
 const options = useOptions();
 
-const setToken = () => {
+const setToken = async () => {
   options.setToken(options.token);
+
+  if (!options.isToken) return;
+
+  if (options.isMsgWelcomeStatus) {
+    await assistant.textToSpeech(options.msgWelcome);
+  }
+
+  if (!assistant.isListening) {
+    await assistant.listening();
+  }
 };
 </script>
 

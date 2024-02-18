@@ -99,7 +99,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <Transition>
+    <Transition name="fade">
       <nav class="w-full" v-show="isMenu">
         <div class="shadow-sm border-y bg-stone-800 border-stone-700">
           <div
@@ -163,15 +163,5 @@ onMounted(() => {
 
 .no-drag {
   -webkit-app-region: no-drag;
-}
-
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
 }
 </style>

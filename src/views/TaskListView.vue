@@ -57,7 +57,7 @@ onMounted(() => {
         </h2>
         <div v-show="`${i}-${j}` === selectTask">
           <div class="py-5 border-stone-700">
-            <p class="text-stone-300">
+            <p class="px-2 text-stone-300">
               {{ task.description }}
             </p>
           </div>
